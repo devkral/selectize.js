@@ -184,7 +184,7 @@
   border: 0 solid rgba(0, 0, 0, 0);
 }
 .selectize-control.multi .selectize-input > div.active {
-  background: #428bca;
+  background: #337ab7;
   color: #fff;
   border: 0 solid rgba(0, 0, 0, 0);
 }

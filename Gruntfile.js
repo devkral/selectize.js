@@ -1,7 +1,6 @@
 var fs = require('fs');
 
 module.exports = function(grunt) {
-	grunt.loadNpmTasks('grunt-bower-task');
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-contrib-concat');
 	grunt.loadNpmTasks('grunt-contrib-clean');
@@ -12,8 +11,7 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-replace');
 
 	grunt.registerTask('configure', [
-		'clean:pre',
-		'bower:install',
+		'clean:pre'
 	]);
 
 	grunt.registerTask('compile', [
@@ -23,7 +21,6 @@ module.exports = function(grunt) {
 		'concat:less_plugins',
 		'concat:js',
 		'less:uncompressed',
-		'clean_bootstrap2_css',
 		'replace',
 		'build_standalone',
 		'uglify',
@@ -39,13 +36,6 @@ module.exports = function(grunt) {
 			'connect',
 			'watch'
 	])
-
-	grunt.registerTask('clean_bootstrap2_css', 'Cleans CSS rules ocurring before the header comment.', function() {
-		var file = 'dist/css/selectize.bootstrap2.css';
-		var source = fs.readFileSync(file, 'utf8');
-		grunt.file.write(file, source.replace(/^(.|\s)+?\/\*/m, '/*'));
-		grunt.log.writeln('Cleaned "' + file + '".');
-	});
 
 	grunt.registerTask('build_standalone', '', function() {
 		var files, i, n, source, name, path, modules = [];
@@ -83,7 +73,7 @@ module.exports = function(grunt) {
 	];
 
 	var files_js_dependencies = [
-		'node_modules/sifter/sifter.js',
+		'node_modules/@devkral/sifter/sifter.js',
 		'node_modules/microplugin/src/microplugin.js',
 	];
 
@@ -113,16 +103,6 @@ module.exports = function(grunt) {
 
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
-		bower: {
-			install: {
-				options: {
-					copy: false,
-					clean: false,
-					layout: 'byComponent',
-					action: 'install'
-				}
-			}
-		},
 		clean: {
 			pre: ['dist'],
 			post: ['**/*.tmp*']
@@ -170,7 +150,6 @@ module.exports = function(grunt) {
 					'dist/css/selectize.css': ['dist/less/selectize.less'],
 					'dist/css/selectize.default.css': ['dist/less/selectize.default.less'],
 					'dist/css/selectize.legacy.css': ['dist/less/selectize.legacy.less'],
-					'dist/css/selectize.bootstrap2.css': ['dist/less/selectize.bootstrap2.tmp.less'],
 					'dist/css/selectize.bootstrap3.css': ['dist/less/selectize.bootstrap3.tmp.less']
 				}
 			}
@@ -196,14 +175,7 @@ module.exports = function(grunt) {
 			less_theme_dependencies: {
 				options: {stripBanners: false},
 				files: {
-					'dist/less/selectize.bootstrap2.tmp.less': [
-						'bower_components/bootstrap2/less/variables.less',
-						'bower_components/bootstrap2/less/mixins.less',
-						'dist/less/selectize.bootstrap2.less'
-					],
 					'dist/less/selectize.bootstrap3.tmp.less': [
-						'bower_components/bootstrap3/less/variables.less',
-						'bower_components/bootstrap3/less/mixins/nav-divider.less',
 						'dist/less/selectize.bootstrap3.less'
 					]
 				}
