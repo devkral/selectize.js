@@ -14,7 +14,6 @@ ifeq ($(strip $(version)),)
 else
 	sed -i.bak 's/"version": "[^"]*"/"version": "$(version)"/' selectize.jquery.json
 	sed -i.bak 's/"version": "[^"]*"/"version": "$(version)"/' package.json
-	sed -i.bak 's/"version": "[^"]*"/"version": "$(version)"/' package-lock.json
 	rm *.bak
 	make compile
 	npm test || exit 1
