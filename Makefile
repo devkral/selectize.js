@@ -4,7 +4,7 @@ GRUNT=node_modules/.bin/grunt
 
 all: compile
 test:
-	npm test
+	yarn test
 compile:
 	$(GRUNT) --plugins=$(plugins)
 release:
@@ -16,14 +16,14 @@ else
 	sed -i.bak 's/"version": "[^"]*"/"version": "$(version)"/' package.json
 	rm *.bak
 	make compile
-	npm test || exit 1
+	yarn test || exit 1
 	cp dist/js/standalone/selectize.js ../.selectize.js
 	git add .
 	git commit -a -m "Released $(version)."
 	git tag v$(version)
 	git push origin master
 	git push origin --tags
-	npm publish
+	yarn publish --access public
 	git checkout gh-pages
 	mv -f ../.selectize.js js/selectize.js
 	git commit -a -m "Updated selectize.js to latest version."
